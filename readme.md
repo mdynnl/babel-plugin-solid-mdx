@@ -4,6 +4,10 @@
 
 A simple babel plugin to transform mdx to solid
 
+## demo
+[solid](https://stackblitz.com/edit/github-hea2ss)
+[solid start](https://stackblitz.com/edit/github-ct2vvw)
+
 ## Install
 
 ```bash
