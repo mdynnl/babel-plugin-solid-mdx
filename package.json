@@ -1,0 +1,16 @@
+{
+  "name": "babel-plugin-solid-mdx",
+  "version": "0.0.1",
+  "description": "babel plugin to transform mdx to solid",
+  "license": "MIT",
+  "author": "Nyi Nyi Lwin <mdy.nnl@gmail.com>",
+  "repository": "mdynnl/babel-plugin-solid-mdx",
+  "bugs": "https://github.com/mdynnl/babel-plugin-solid-mdx/issues",
+  "sideEffects": false,
+  "type": "module",
+  "exports": "./index.js",
+  "files": [
+    "index.d.ts",
+    "index.js"
+  ]
+}
