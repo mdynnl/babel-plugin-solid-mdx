@@ -90,3 +90,64 @@ export default defineConfig({
   ],
 });
 ```
+
+
+
+## note
+The transform pipeline basically goes like this.
+
+#### 1. mdx
+```md
+# heading
+
+paragraph
+
+- list
+```
+
+#### 2. mdx jsx
+```jsx
+/*@jsxRuntime automatic*/
+/*@jsxImportSource solid-js*/
+function _createMdxContent(props) {
+  const _components = {
+    h1: "h1",
+    li: "li",
+    p: "p",
+    ul: "ul",
+    ...props.components
+  };
+  return <><_components.h1>{"heading"}</_components.h1>{"\n"}<_components.p>{"paragraph"}</_components.p>{"\n"}<_components.ul>{"\n"}<_components.li>{"list"}</_components.li>{"\n"}</_components.ul></>;
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = props.components || ({});
+  return MDXLayout ? <MDXLayout {...props}><_createMdxContent {...props} /></MDXLayout> : _createMdxContent(props);
+}
+```
+
+### 3. babel-plugin-solid-mdx
+
+`solid-js` transforms jsx elements into `createComponent` calls which doesn't support string tags. This plugins transforms jsx elements with potential string tags to use `Dynamic` instead.
+```jsx
+import { Dynamic } from "solid-js/web"
+
+/*@jsxRuntime automatic*/
+/*@jsxImportSource solid-js*/
+function _createMdxContent(props) {
+  const _components = {
+    h1: "h1",
+    li: "li",
+    p: "p",
+    ul: "ul",
+    ...props.components
+  };
+  return <><Dynamic component={_components.h1}>{"heading"}</Dynamic>{"\n"}<Dynamic component={_components.p}>{"paragraph"}</Dynamic>{"\n"}<Dynamic component={_components.ul}>{"\n"}<Dynamic component={_components.li}>{"list"}</Dynamic>{"\n"}</Dynamic></>;
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = props.components || ({});
+  return MDXLayout ? <MDXLayout {...props}><_createMdxContent {...props} /></MDXLayout> : _createMdxContent(props);
+}
+```
+
+### 4. babel-plugin-solid-mdx
+And the rest is handled by `solid-js` babel transform.
